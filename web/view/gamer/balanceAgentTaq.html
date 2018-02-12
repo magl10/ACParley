@@ -1,0 +1,186 @@
+<div ng-controller="BalancePlayerControllerDetails">
+        <div class="bg-light lter b-b wrapper-md">
+          <div class="row">
+            <div class="col-sm-12 col-xs-12">
+              <h1 class="m-n font-thin h3 text-black">Balance Detallado Taquillas (Banca Agente)</h1>
+            </div>
+          </div>
+                
+    </div>
+    <div class="wrapper-md">
+        <div class="panel panel-default" ng-show="isLoadingData">
+            <div class="center-block center_loading">
+            <h3>Recolectando Informacion de Las Ventas</h3>
+            <button class="btn btn-lg btn-warning"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Cargando...</button>
+            </div>
+        </div>
+        <div class="panel panel-default" ng-hide="isLoadingData">
+            <div class="panel-heading">
+                <div class="row">
+        <div class="col-sm-4 col-md-2">
+            <div class="form-group input-group" >
+               <span class="input-group-addon">Desde</span>
+               <input type="text" class="form-control"  datepicker-popup="dd-MM-yyyy" ng-model="from" is-open="openedfrom" min-date="minDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Cerrar" />
+               <span class="input-group-btn">
+                   <button type="button" class="btn btn-default" ng-click="open($event,1)"><i class="glyphicon glyphicon-calendar"></i></button>
+               </span>
+           </div>
+        </div>
+        <div class="col-sm-4 col-md-2"  >
+           <div class="form-group input-group" >
+               <span class="input-group-addon">Hasta</span>
+               <input type="text" class="form-control"  datepicker-popup="dd-MM-yyyy" ng-model="to" is-open="openedto" min-date="minDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Cerrar" />
+               <span class="input-group-btn">
+                   <button type="button" class="btn btn-default" ng-click="open($event,2)"><i class="glyphicon glyphicon-calendar"></i></button>
+               </span>
+           </div>
+       </div>
+        <div class="col-sm-4 col-md-4" >
+           <div class="form-group input-group"  >
+               <span class="input-group-addon">Agentes</span>
+               <select ui-jq="selectpicker"  multiple data-selected-text-format="count>3" title="Seleccione" class="selectpicker"  data-ng-options="a.nameagente  for a in agents"  data-ng-model="agent">                    
+              </select>
+
+           </div>
+        </div>
+        <div class="col-sm-4 col-md-4" >
+           <div class="form-group input-group"  >
+               <span class="input-group-addon">Agencia</span>
+               <select ui-jq="selectpicker"  multiple data-selected-text-format="count>3" title="Seleccione" class="selectpicker"  data-ng-options="a.nameagencia  for a in agencias"  data-ng-model="agencia">                    
+              </select>
+
+           </div>
+        </div>
+    </div>
+            </div>
+            <div class="panel-body">
+            <accordion close-others="oneAtATime">
+                <accordion-group  is-open="agent.open" ng-repeat="agent in agents | filter:filterAgent">
+                    <accordion-heading>
+                        Agente {{agent.nameagente}}
+                        <i class="pull-right glyphicon"  ng-class="{'glyphicon-chevron-down': agent.open, 'glyphicon-chevron-right': !agent.open}"></i>
+                    </accordion-heading>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>IdUsuario</th>
+                                    <th>Taquilla/Jugador</th>
+                                    <th>Tickets</th>
+                                    <th>Venta</th>
+                                    <th>Devolucion</th>
+                                    <th>Premios</th>
+                                    <th>Comision Venta</th>
+                                    <th>Ganancia</th>
+                                    <th>Sub Total</th>
+                                    <th>Participacion</th>
+                                    <th>Saldo</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="summ in getAgenciabyAgent(agent)">
+                                    <td>{{summ.username}}</td>
+                                    <td>{{summ.agencia}}</td>
+                                    <td>{{summ.canttickets}}</td>
+                                    <td>{{formato(summ.sale)}}</td>
+                                    <td>{{formato(summ.devolucion)}}</td>
+                                    <td><a style="cursor: pointer" ng-click="getDetails(summ.username,summ.premio)">{{formato(summ.premio)}}</a></td>
+                                    <td>{{formato(summ.comision)}}</td>
+                                    <td>{{formato(summ.ganancia)}}</td>
+                                    <td>{{formato(summ.subtotal)}}</td>
+                                    <td>{{formato(summ.participacion)}}</td>
+                                    <td>{{formato(summ.saldo)}}</td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                <th colspan="2">Totales</th>
+                                <th>{{agent.resumeAgent.tickets}}</th>
+                                <th>{{formato(agent.resumeAgent.vta)}}</th>
+                                <th>{{formato(agent.resumeAgent.dev)}}</th>
+                                <th>{{formato(agent.resumeAgent.premio)}}</th>
+                                <th>{{formato(agent.resumeAgent.comision)}}</th>
+                                <th>{{formato(agent.resumeAgent.ganancia)}}</th>
+                                <th>{{formato(agent.resumeAgent.subtotal)}}</th>
+                                <th>{{formato(agent.resumeAgent.participacion)}}</th>
+                                <th>{{formato(agent.resumeAgent.saldo)}}</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                      <div class="row m">
+                        <div class="col-md-12 ">
+                            <button type="button" ng-click="agent.hiddenDetails=!agent.hiddenDetails" class="btn btn-rounded pull-right">{{agent.hiddenDetails?"Ocultar Detalles":"Ver Detalles"}}</button>
+                            <button type="button" class="btn btn-rounded pull-right">Imprimir</button>
+                        </div>
+                     </div>
+                    <div ng-show="agent.hiddenDetails" class="table-responsive">
+                        <table class="table table-hover"  >
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Derecho</th>
+                                <th>Parlay</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Total Ventas</td>
+                                <td>{{formato(agent.resumeAgent.vtaderecho)}}</td>
+                                <td>{{formato(agent.resumeAgent.vtaparlay)}}</td>
+                                <td>{{formato(agent.resumeAgent.vta)}}</td>
+                            </tr>
+                            <tr>
+                                <td>Total Devoluciones</td>
+                                <td>{{formato(agent.resumeAgent.devderecho)}}</td>
+                                <td>{{formato(agent.resumeAgent.devparlay)}}</td>
+                                <td>{{formato(agent.resumeAgent.dev)}}</td>
+                            </tr>
+                            <tr>
+                                <td>Premios</td>
+                                <td>{{formato(agent.resumeAgent.premioderecho)}}</td>
+                                <td>{{formato(agent.resumeAgent.premioparlay)}}</td>
+                                <td>{{formato(agent.resumeAgent.premio)}}</td>
+                            </tr>
+                            <tr>
+                                <td>Comision</td>
+                                <td>{{formato(agent.resumeAgent.comisionderecho)}}</td>
+                                <td>{{formato(agent.resumeAgent.comisionparlay)}}</td>
+                                <td>{{formato(agent.resumeAgent.comision)}}</td>
+                            </tr>
+                        
+                            <tr>
+                                <td>Ganancia</td>
+                                <td></td>
+                                <td></td>
+                                <td>{{formato(agent.resumeAgent.ganancia)}}</td>
+                            </tr>
+                            <tr>
+                                <td>Sub-Total</td>
+                                <td></td>
+                                <td></td>
+                                <td>{{formato(agent.resumeAgent.subtotal)}}</td>
+                            </tr>
+                             <tr>
+                                <td>Partipacion</td>
+                                <td></td>
+                                <td></td>
+                                <td>{{formato(agent.resumeAgent.participacion)}}</td>
+                            </tr>
+                            <tr>
+                                <td>Balance Total</td>
+                                <td></td>
+                                <td></td>
+                                <td>{{formato(agent.resumeAgent.saldo)}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                        </div>
+                </accordion-group>
+            </accordion>
+            </div>
+        </div>
+    </div>
+</div>
+

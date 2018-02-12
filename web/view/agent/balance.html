@@ -1,0 +1,168 @@
+<div ng-controller="BalanceAgentController">
+        <div class="bg-light lter b-b wrapper-md">
+          <div class="row">
+            <div class="col-sm-12 col-xs-12">
+              <h1 class="m-n font-thin h3 text-black">Balance General (Banca Agentes)</h1>
+            </div>
+          </div>
+                
+    </div>
+    <div class="wrapper-md">
+                <div class="panel panel-default" ng-show="isLoadingData">
+            <div class="center-block center_loading">
+                <h3>Recolectando la Información de las Ventas</h3>
+            <button class="btn btn-lg btn-warning"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Cargando...</button>
+            </div>
+        </div>
+        <div class="panel panel-default" ng-hide="isLoadingData">
+            <div class="panel-heading">
+                <div class="row">
+        <div class="col-sm-4 col-md-2">
+            <div class="form-group input-group" >
+               <span class="input-group-addon">Desde</span>
+               <input type="text" class="form-control"  datepicker-popup="dd-MM-yyyy" ng-model="from" is-open="openedfrom" min-date="minDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Cerrar" />
+               <span class="input-group-btn">
+                   <button type="button" class="btn btn-default" ng-click="open($event,1)"><i class="glyphicon glyphicon-calendar"></i></button>
+               </span>
+           </div>
+        </div>
+        <div class="col-sm-4 col-md-2"  >
+           <div class="form-group input-group" >
+               <span class="input-group-addon">Hasta</span>
+               <input type="text" class="form-control"  datepicker-popup="dd-MM-yyyy" ng-model="to" is-open="openedto" min-date="minDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Cerrar" />
+               <span class="input-group-btn">
+                   <button type="button" class="btn btn-default" ng-click="open($event,2)"><i class="glyphicon glyphicon-calendar"></i></button>
+               </span>
+           </div>
+       </div>
+        <div class="col-sm-4 col-md-4" >
+           <div class="form-group input-group"  >
+               <span class="input-group-addon">Agentes</span>
+               <select ui-jq="selectpicker"  multiple data-selected-text-format="count>3" title="Seleccione" class="selectpicker"  data-ng-options="a.nameagente  for a in agents"  data-ng-model="agentSelected">                    
+              </select>
+
+           </div>
+        </div>
+    </div>
+            </div>
+                    <div class="panel-body table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Agente</th>
+                                    <th>Tickets</th>
+                                    <th>Venta</th>
+                                    <th>Devolucion</th>
+                                    <th>Premios</th>
+                                    <th>Comision Venta</th>
+                                    <th>% Ganancia</th>
+                                    <th>Sub Total</th>
+                                    <th>Participacion</th>
+                                    <th>Saldo</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="summ in summary | filter:checkSelected">
+                                    <td>{{summ.agente}}</td>
+                                    <td>{{summ.canttickets}}</td>
+                                    <td>{{formato(summ.sale)}}</td>
+                                    <td>{{formato(summ.devolucion)}}</td>
+                                    <td><a style="cursor: pointer" ng-click="getDetails(summ.username,summ.premio)">{{formato(summ.premio)}}</a></td>
+                                    <td>{{formato(summ.comision)}}</td>
+                                    <td>{{formato(summ.ganancia)}}</td>
+                                    <td>{{formato(summ.subtotal)}}</td>
+                                    <td>{{formato(summ.participacion)}}</td>
+                                    <td>{{formato(summ.saldo)}}</td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>Totales</th>
+                                    <th>{{formato(resumenOffice.tickets)}}</th>
+                                    <th>{{formato(resumenOffice.vta)}}</th>
+                                    <th>{{formato(resumenOffice.dev)}}</th>
+                                    <th>{{formato(resumenOffice.premio)}}</th>
+                                    <th>{{formato(resumenOffice.comision)}}</th>
+                                    <th>{{formato(resumenOffice.ganancia)}}</th>
+                                    <th>{{formato(resumenOffice.subtotal)}}</th>
+                                    <th>{{formato(resumenOffice.participacion)}}</th>
+                                    <th>{{formato(resumenOffice.saldo)}}</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+            <div class="row m">
+                <div class="col-md-12 ">
+                    <button type="button" ng-click="detail_hidden=!detail_hidden" class="btn btn-rounded pull-right">{{detail_hidden?"Ocultar Detalles":"Ver Detalles"}}</button>
+                    <button type="button" class="btn btn-rounded pull-right">Imprimir</button>
+                </div>
+            </div>
+            <div ng-show="detail_hidden" class="table-responsive">
+                        <table class="table table-hover" >
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Derecho</th>
+                                <th>Parlay</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Total Ventas</td>
+                                <td>{{formato(resumenOffice.vtaderecho)}}</td>
+                                <td>{{formato(resumenOffice.vtaparlay)}}</td>
+                                <td>{{formato(resumenOffice.vta)}}</td>
+                            </tr>
+                            <tr>
+                                <td>Total Devoluciones</td>
+                                <td>{{formato(resumenOffice.devderecho)}}</td>
+                                <td>{{formato(resumenOffice.devparlay)}}</td>
+                                <td>{{formato(resumenOffice.dev)}}</td>
+                            </tr>
+                            <tr>
+                                <td>Premios</td>
+                                <td>{{formato(resumenOffice.premioderecho)}}</td>
+                                <td>{{formato(resumenOffice.premioparlay)}}</td>
+                                <td>{{formato(resumenOffice.premio)}}</td>
+                            </tr>
+                            <tr>
+                                <td>Comision</td>
+                                <td>{{formato(resumenOffice.comisionderecho)}}</td>
+                                <td>{{formato(resumenOffice.comisionparlay)}}</td>
+                                <td>{{formato(resumenOffice.comision)}}</td>
+                            </tr>
+                         
+                            <tr>
+                                <td>Ganancia</td>
+                                <td></td>
+                                <td></td>
+                                <td>{{formato(resumenOffice.ganancia)}}</td>
+                            </tr>
+                               <tr>
+                                <td>Sub-Total</td>
+                                <td></td>
+                                <td></td>
+                                <td>{{formato(resumenOffice.subtotal)}}</td>
+                            </tr>
+                               <tr>
+                                <td>Participacion</td>
+                                <td></td>
+                                <td></td>
+                                <td>{{formato(resumenOffice.participacion)}}</td>
+                            </tr>
+                            <tr>
+                                <td>Balance Total</td>
+                                <td></td>
+                                <td></td>
+                                <td>{{formato(resumenOffice.saldo)}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                        </div>
+       
+        
+        </div>
+    </div>
+</div>
+

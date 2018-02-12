@@ -1,0 +1,127 @@
+<!-- first -->
+<ul class="nav">
+    
+   <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
+    <span translate="aside.nav.home.HEADER">Home</span>
+  </li>
+  
+  <li>
+    <a ui-sref="app.dashboard">
+      <i class="glyphicon glyphicon-stats icon text-primary-dker"></i>
+      <span class="font-bold" translate="aside.nav.home.DASHBOARD">Dashboard</span>
+    </a>
+  </li>
+  
+  <li ng-hide="production" class="line dk"></li>
+  
+  <li  class="hidden-folded padder m-t m-b-sm text-muted text-xs">
+    <span translate="aside.nav.player.HEADER">Jugadores</span>
+  </li>
+  
+  <li ui-sref-active="active" >
+    <a ui-sref="app.player">
+      <i class="fa fa-users"></i>
+      <span class="font-bold" translate="aside.nav.player.SHOW">Mostrar</span>
+    </a>
+  </li>
+  
+  <li>
+    <a ui-sref="app.player-tickets">
+      <i class="fa fa-cubes"></i>
+      <span class="font-bold" translate="aside.nav.player.SALE">Ventas</span>
+    </a>
+  </li>
+  <li>
+    <a ui-sref="app.player-play">
+      <i class="fa fa-gamepad"></i>
+      <span class="font-bold" translate="aside.nav.player.PLAY">Jugadas</span>
+    </a>
+  </li>
+  
+  
+  <li class="line dk"></li>
+
+  <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
+    <span translate="aside.nav.agent.HEADER">Agentes</span>
+  </li>
+  <li ui-sref-active="active">
+    <a ui-sref="app.agent">
+      <i class="fa fa-users"></i>
+      <span translate="aside.nav.agent.SHOW">Mostrar</span>
+    </a>
+  
+  <li class="line dk hidden-folded"></li>
+
+  <li   class="hidden-folded padder m-t m-b-sm text-muted text-xs">          
+    <span translate="aside.nav.report.HEADER">Reportes</span>
+  </li>  
+  <li>
+    <a ui-sref="app.report">
+      <i class="fa fa-line-chart"></i>
+      <span translate="aside.nav.report.PLAYER">Estado de Jugadas</span>
+    </a>
+  </li>
+  <li >
+     <a href class="auto">      
+      <span class="pull-right text-muted">
+        <i class="fa fa-fw fa-angle-right text"></i>
+        <i class="fa fa-fw fa-angle-down text-active"></i>
+      </span>
+      <i class="glyphicon glyphicon-th"></i>
+      <span>Balance Det</span>
+    </a>
+     <ul class="nav nav-sub dk">
+      <li class="nav-sub-header">
+        <a href>
+          <span>Balance Detallado</span>
+        </a>
+      </li>
+      <li ui-sref-active="active">
+        <a ui-sref="app.player-balance">
+         <span>Agente Taquilla</span>
+        </a>
+      </li>
+       <li ui-sref-active="active">
+        <a ui-sref="app.player-balanceagent">
+           <span>Banca Agente</span>
+        </a>
+      </li>
+    </ul>
+  </li>
+  <li>
+       <a href class="auto">      
+      <span class="pull-right text-muted">
+        <i class="fa fa-fw fa-angle-right text"></i>
+        <i class="fa fa-fw fa-angle-down text-active"></i>
+      </span>
+      <i class="glyphicon glyphicon-th"></i>
+      <span>Balance General</span>
+    </a>
+     <ul class="nav nav-sub dk">
+      <li class="nav-sub-header">
+        <a href>
+          <span>Balance General</span>
+        </a>
+      </li>
+      <li ui-sref-active="active">
+        <a ui-sref="app.agent-balanceagent">
+             <span translate="aside.nav.agent.BALANCEAGENT">Agente-Taq</span>
+        </a>
+      </li>
+      <li ui-sref-active="active">
+        <a ui-sref="app.agent-balance">
+         <span translate="aside.nav.agent.BALANCE">Banca-Agente</span>
+        </a>
+      </li>
+       
+    </ul>
+   
+  </li>
+  <li ng-hide="production">
+    <a ui-sref="app.docs">
+      <i class="icon-question icon"></i>
+      <span translate="aside.nav.report.AGENT">Agente</span>
+    </a>
+  </li>
+</ul>
+<!-- / third -->

@@ -1,0 +1,143 @@
+<div class="bg-light lter b-b wrapper-md">
+    <h1 class="m-n font-thin h3">Creaci&oacute;n de Jugador</h1>
+</div>
+<div class="wrapper-md">
+  <tabset class="tab-container" ng-init="steps ={percent: 5, step1:true, step2:false, step3:false,step4:false,step5:false}">
+    <tab heading="Datos Basicos" active="steps.step1" select="steps.percent=5">
+      <p class="m-b">Indique la informacion Basica del Jugador</p>
+      <progressbar value="steps.percent" class="progress-xs" type="success"></progressbar>
+      <form name="step1" class="form-validation">
+        <p>Usuario:</p>
+        <input type="text" name="username" class="form-control" ng-model="user.username" required ng-change="step1.username.$valid ? (steps.percent=10) : (steps.percent=5)">
+        <p>Nombre:</p>
+        <input type="text" name="nameagencia" class="form-control" ng-model="user.nameagencia" required ng-change="step1.nameagencia.$valid ? (steps.percent=15) : (steps.percent=10)">
+        <p>Credito</p>
+        <input type="text" name="creditlimit" class="form-control" ng-model="user.creditlimit" required ng-change="step1.creditlimit.$valid ? (steps.percent=20) : (steps.percent=15)">
+        <p>Agente</p>
+        <select name="sagent" class="form-control" data-ng-options="a as a.nameagente for a in agents" ng-model="user.idAgent" required ng-change="step1.sagent.$valid ? (steps.percent=25) : (steps.percent=20)"></select>
+        <p>Tipo</p>
+        <select type="text" name="istaquilla" class="form-control" ng-model="user.istaquilla" required ng-change="step1.istaquilla.$valid ? (steps.percent=25) : (steps.percent=20)">
+            <option value="true" selected>Taquilla</option>
+            <option value="false">Jugador Online</option>
+        </select>
+        <div  ng-show="user.istaquilla">
+            <p>Manejador de Impresion</p>
+            <select class="form-control" ng-model="user.typeprint">
+                <option value="0">Print Manager</option>
+                <option value="1">Applet</option>
+                <option value="2">Windows Print</option>
+            </select>
+        </div>
+        <div class="m-t m-b">
+          <button type="submit" ng-disabled="step1.$invalid" class="btn btn-default btn-rounded" ng-click="steps.step2=true">Siguiente</button>
+        </div>
+      </form>
+    </tab>
+    <tab heading="Datos de Contacto" disabled="step1.$invalid" active="steps.step2" select="steps.percent=20">
+      <form name="step2" class="form-validation">
+        <p class="m-b">Contacto</p>
+        <progressbar value="steps.percent" class="progress-xs" type="success"></progressbar>
+        <p>Responsable:</p>
+        <input type="text" name="responsable" class="form-control" ng-model="user.responsable" required ng-change="step1.responsable.$valid ? (steps.percent=25) : (steps.percent=20)">
+        <p>Telefono</p>
+        <input type="tel" name="phone" class="form-control" ng-model="user.phone" required ng-change="step1.phone.$valid ? (steps.percent=30) : (steps.percent=25)">
+        <p>Email</p>
+        <input type="email" name="email" class="form-control" ng-model="user.email" required ng-change="step1.email.$valid ? (steps.percent=35) : (steps.percent=30)">
+        <div class="m-t m-b">
+          <button type="button" class="btn btn-default btn-rounded" ng-click="steps.step1=true">Atras</button>
+          <button type="submit" ng-disabled="step2.$invalid" class="btn btn-default btn-rounded" ng-click="steps.step3=true">Siguiente</button>
+        </div>
+      </form>
+    </tab>
+    <tab heading="Comisiones" disabled="step2.$invalid" active="steps.step3" select="steps.percent=35">
+      <p class="m-b">Comisiones del Jugador</p>
+      <progressbar value="steps.percent" class="progress-xs" type="success"></progressbar>
+      <p>Derecho</p>
+      <input type="number" name="comisionderecho" class="form-control" ng-model="user.comisionderecho" required ng-change="step3.comisionderecho.$valid ? (steps.percent=40) : (steps.percent=35)"><span>%</span>
+      <p>Parlay</p>
+      <input type="number" name="comisionparlay" class="form-control" ng-model="user.comisionparlay" required ng-change="step3.comisionparlay.$valid ? (steps.percent=45) : (steps.percent=40)"><span>%</span>
+      <p>Participacion</p>
+      <input type="number" name="partipacion" class="form-control" ng-model="user.partipacion" required ng-change="step3.partipacion.$valid ? (steps.percent=50) : (steps.percent=45)"><span>%</span>
+      <p>Ganancia</p>
+      <input type="number" name="porcentajeganancia" class="form-control" ng-model="user.porcentajeganancia" required ng-change="step3.porcentajeganancia.$valid ? (steps.percent=55) : (steps.percent=50)"><span>%</span>
+      <div class="m-t m-b">
+        <button type="button" class="btn btn-default btn-rounded" ng-click="steps.step2=true">Atras</button>
+        <button type="submit" ng-disabled="step3.$invalid" class="btn btn-default btn-rounded" ng-click="steps.step4=true">Siguiente</button>
+      </div>
+    </tab>
+    <tab heading="Limites" disabled="step3.$invalid" active="steps.step4" select="steps.percent=55">
+      <p class="m-b">Limites del Jugador</p>
+      <progressbar value="steps.percent" class="progress-xs" type="success"></progressbar>
+      <p>Maximo de Jugadas Diaria</p>
+      <input type="number" name="limitsaleday" class="form-control" ng-model="user.limitsaleday" required ng-change="step4.limitsaleday.$valid ? (steps.percent=60) : (steps.percent=55)">
+      <p>Derecho</p>
+      <input type="number" name="limitderecho" class="form-control" ng-model="user.limitderecho" required ng-change="step4.limitderecho.$valid ? (steps.percent=60) : (steps.percent=55)">
+      <p>Parlay</p>
+      <input type="number" name="limitparlay" class="form-control" ng-model="user.limitparlay" required ng-change="step4.limitparlay.$valid ? (steps.percent=65) : (steps.percent=60)">
+      <p>Proporcion de Pago</p>
+      <input type="number" name="proporcion" class="form-control" ng-model="user.proporcion" required ng-change="step4.proporcion.$valid ? (steps.percent=75) : (steps.percent=70)">
+      <p>Combinaciones</p>
+      <input type="number" name="limitcombina" class="form-control" ng-model="user.limitcombina" required ng-change="step4.limitcombina.$valid ? (steps.percent=80) : (steps.percent=75)">
+      <p>Max Apuesta</p>
+      <input type="number" name="maxbet" class="form-control" ng-model="user.maxbet" required ng-change="step4.maxbet.$valid ? (steps.percent=85) : (steps.percent=80)"><span>%</span>
+       <div class="input-group">
+        <span class="input-group-addon"><input type="checkbox" name="pardos" ng-model="user.pardos" required ng-change="step4.pardos.$valid ? (steps.percent=70) : (steps.percent=65)"></span>
+        <input type="text" class="form-control" value="Parley de Dos">
+      </div>
+      <div class="m-t m-b">
+        <button type="button" class="btn btn-default btn-rounded" ng-click="steps.step3=true">Atras</button>
+        <button type="submit" ng-disabled="step4.$invalid" class="btn btn-default btn-rounded" ng-click="steps.step5=true">Siguiente</button>
+      </div>
+    </tab>
+    <tab heading="Confirmaci&oacute;n" disabled="step4.$invalid" active="steps.step5" select="steps.percent=100">
+      <p class="m-b">Informacion a Guardar</p>
+      <progressbar value="steps.percent" class="progress-xs" type="success"></progressbar>
+      <div>
+          <h4>Datos Basicos</h4>
+          <p>
+              <span>Usuario: {{user.username}}</span>&nbsp;&nbsp;
+              <span>Nombre: {{user.nameagencia}}</span>&nbsp;&nbsp;
+              <span>Credito: {{user.creditlimit}}</span>
+              <span>Tipo: {{user.istaquilla?"Taquilla":"Jugador Online"}}</span>
+              <span>Impresi&oacute;n: {{user.typeprint?"Taquilla":"No Imprime"}}</span>
+          </p>
+      </div>
+      <div>
+          <h4>Informaci&oacute;n de Contacto</h4>
+          <p>
+              <span>Responsable: {{user.responsable}}</span>&nbsp;&nbsp;
+              <span>Telefono: {{user.phone}}</span>&nbsp;&nbsp;
+              <span>Email: {{user.email}}</span>
+          </p>
+      </div>
+      <div>
+          <h4>Comisiones</h4>
+          <p>
+              <span>Derecho: {{user.comisionderecho}}%</span>&nbsp;&nbsp;
+              <span>Parlay: {{user.comisionparlay}}%</span>&nbsp;&nbsp;
+              <span>Participaci&oacute;n: {{user.partipacion}}%</span>&nbsp;&nbsp;
+              <span>Ganancia: {{user.porcentajeganancia}}%</span>&nbsp;&nbsp;
+          </p>
+      </div>
+      <div>
+          <h4>Limites</h4>
+          <p>
+              <span>Maximo De Jugadas Diario: {{user.limitsaleday}}%</span>&nbsp;&nbsp;
+              <span>Derecho: {{user.limitderecho}}</span>&nbsp;&nbsp;
+              <span>Parlay: {{user.limitparlay}}</span>&nbsp;&nbsp;
+              <span>Proporci&oacute;n de Pago: {{user.proporcion}}</span>&nbsp;&nbsp;
+              <span>Combinaciones: {{user.limitcombina}}</span>&nbsp;&nbsp;
+              <span>Max Apuesta: {{user.maxbet}}</span>&nbsp;&nbsp;
+              <span>Parlay de Dos: {{user.pardos?"No Permitido":"Permitido"}}</span>&nbsp;&nbsp;
+          </p>
+      </div>
+      <p>Contrase&ntilde;a</p>
+      <input type="password" name="pass" class="form-control" ng-model="user.pass" required ng-change="step4.pass.$valid ? (steps.percent=92) : (steps.percent=90)"><span></span>
+      <p>Confirmar Contrase&ntilde;a</p>
+      <input type="password" name="confirmpass" class="form-control" ng-model="passConfirm" required ng-change="step4.confirmpass.$valid ? (steps.percent=95) : (steps.percent=90)"><span></span>
+      <div class="m-t m-b">
+        <button type="button" class="btn btn-default btn-rounded" ng-disabled="user.pass!=passConfirm" ng-click="update()">Guardar Jugador</button>
+      </div>
+    </tab>
+  </tabset>
+</div>

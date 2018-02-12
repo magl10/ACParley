@@ -1,0 +1,99 @@
+<div ng-controller="showAgentController" ng-init="getPlayer()">
+<div  class="bg-light lter b-b wrapper-md">
+      <div class="row">
+        <div class="col-sm-10 col-xs-10">
+          <h1 class="m-n font-thin h3 text-black">Agentes</h1>
+          
+        </div>
+        <div class="col-sm-2 col-xs-2">
+            <div class="m-b-xs pull-right">{{agents.length}} <span class="text-muted">Agentes</span></div>
+        </div>
+      </div>
+    
+</div>
+    <div class="wrapper-md">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="row">
+        <div class="col-md-2 pull-left">
+            <div class="input-group">
+                <span class="input-group-addon">Mostrar</span>
+                <select ng-change="currentPage=0" ng-model="pageShow" class="form-control" data-ng-options="opt.view for opt in optionPageShow"></select>
+            </div>
+        </div>
+        <div class="col-md-2 pull-right">
+            <div class="form-group">
+            <div class="input-group">
+                <input type="text"  ng-model="search" typeahead="state for state in states | filter:$viewValue | limitTo:8" class="form-control input-sm bg-light no-border rounded padder ng-pristine ng-valid" placeholder="Buscar Jugador..." aria-autocomplete="list" aria-expanded="false" aria-owns="typeahead-00F-74"><!-- ngIf: isOpen() -->
+              <span class="input-group-btn">
+                <button type="submit" class="btn btn-sm bg-light rounded"><i class="fa fa-search"></i></button>
+              </span>
+            </div>
+          </div>
+        </div>
+    </div>
+    </div>
+    <div class="panel-body table-responsive">
+      <table class="table table-striped m-b-none">
+        <thead>
+          <tr>
+            <th>Agente</th>
+            <th>Usuario</th>
+            <th class="hidden-xs">Email</th>
+            <th class="hidden-xs">Telefono</th>
+            <th class="hidden-xs">Tipo</th>
+            <th>Derecho</th>
+            <th>Parlay</th>
+            <th>Participacion</th>
+            <th>Ganancia</th>
+            <th>Operaciones</th>
+          </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="agent in agents | filter:checkSearch" ng-show="showItem($index)">
+                <td><input  class="form-control" type="text" ng-show="agent.editing" ng-model="agent.nameagente" ><span ng-hide="agent.editing"> {{agent.nameagente}}</span></td>
+                <td>{{agent.username}}</td>
+                <td><input class="form-control" type="text" ng-show="agent.editing"  ng-model="agent.email" ><span ng-hide="agent.editing">{{agent.email}}</span></td>
+                <td><input class="form-control" type="tel" ng-show="agent.editing"  ng-model="agent.telf"><span ng-hide="agent.editing">{{agent.telf}}</span></td>
+                <td>{{(agent.alquiler>0)?"Alquiler":"normal"}}</td>
+                <td><input maxlength="3" class="form-control w-xxs" type="number" ng-show="agent.editing"  ng-model="agent.derecho"><span ng-hide="agent.editing">{{agent.derecho}}</span>%</td>
+                <td><input maxlength="3" class="form-control w-xxs" type="number" ng-show="agent.editing"  ng-model="agent.parlay"><span ng-hide="agent.editing">{{agent.parlay}}</span>%</td>
+                <td><input maxlength="3" class="form-control w-xxs" type="number" ng-show="agent.editing"  ng-model="agent.participacion"><span ng-hide="agent.editing">{{agent.participacion}}</span>%</td>
+                <td><input maxlength="3" class="form-control w-xxs" type="number" ng-show="agent.editing"  ng-model="agent.ganancia"><span ng-hide="agent.editing">{{agent.ganancia}}</span>%</td>
+                <td> 
+                    <div ng-show="!agent.editing"  class="btn-group" role="group" aria-label="...">
+                        <button type="button" ng-click="agent.editing=true" class="btn btn-default"><span ng-bind-html="iconToggleOn"></span><span>Editar</span></button>
+                        <button type="button" class="btn btn-default"><span ng-bind-html="iconKey"></span><span>Reset Pass</span></button>
+                        <button type="button" class="btn btn-default"><span ng-bind-html="iconToggleOn"></span><span>Desactivar</span></button>
+                    </div>
+                    <div ng-show="agent.editing" class="btn-group" role="group" aria-label="...">
+                        <button type="button" ng-click="edit(agent)" class="btn btn-default"><span ng-bind-html="iconToggleOn"></span><span>Guardar</span></button>
+                        <button type="button" ng-click="agent.editing=false" class="btn btn-default"><span ng-bind-html="iconKey"></span><span>Cerrar</span></button>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+      </table>
+    </div>
+      <div class="panel-footer">
+          <nav >
+            <ul class="pagination pagination-sm">
+                <li ng-click="$event.preventDefault();prevPage()">
+                    <a href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li ng-repeat="value in getItemTotal()" ng-class="{'active': $index==currentPage}" ng-show="((showview+currentPage>$index||totalPagination-currentPage<=showview)&&$index>=currentPage)||showview>totalPagination" ng-click="$event.preventDefault();changePage($index)">
+                    <a href="#">{{value}}</a>
+                </li>
+                <li ng-click="$event.preventDefault();nextPage()">
+                    <a href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+          </nav>
+      </div>
+  </div>
+</div>
+</div>

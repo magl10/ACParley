@@ -1,0 +1,51 @@
+<div class="row" ng-init="getPlayers()">
+            <div class="col-sm-6" >
+                <div class="input-group" >
+                <input type="text" 
+                       class="form-control input-sm bg-light no-border rounded padder ng-pristine ng-valid" 
+                       ng-enter="press()"   
+                       placeholder="Escriba el numero del Ticket" ng-model="search" />
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-sm bg-light rounded" ng-click="press()">
+                           <i class="fa fa-search"></i> Buscar
+                        </button>
+                        <button type="button" class="btn  btn-sm bg-light rounded" ng-click="openFilter()">
+                            <span class="caret"></span>
+                            <span class="sr-only">Busqueda Avanzada</span>
+                         </button>
+                        <ul class="dropdown-menu search-menu" role="menu" id="filters" >
+                 <li>
+                    <div class="panel-heading">Busqueda Avanzada</div>
+                    <div class="panel-body">
+                        <div ng-hide="hiddenmenu"  class="form-group input-group">
+                            <span class="input-group-addon">Status</span>
+                            <select ui-jq="selectpicker"  title="Seleccione Una Opcion" 
+                                    multiple data-selected-text-format="count>3" 
+                                    class="selectpicker" 
+                                    data-ng-options="a.name for a in status" 
+                                data-ng-model="stat">
+                            </select>
+                        </div>
+                    <div class="form-group input-group" >
+                        <span class="input-group-addon">Desde</span>
+                        <input type="text" class="form-control"  datepicker-popup="dd-MM-yyyy" ng-model="from" is-open="openedfrom" min-date="minDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Cerrar" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="open($event,1)"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                    </div>
+                          
+                    <div class="form-group input-group" ng-hide="hiddenmenu" >
+                        <span class="input-group-addon">Juego</span>
+                        <select ui-jq="selectpicker"   multiple data-selected-text-format="count>3" title="Seleccione Una Opcion" class="selectpicker" data-ng-options="a.nameagencia for a in games"  data-ng-model="game">                    
+                       </select>
+                    </div>
+                    </div>
+                    </li>
+                </ul>
+                    </div>
+                </div>
+             </div>
+            <div class="col-sm-6" >
+                {{message}}
+            </div>  
+    </div>

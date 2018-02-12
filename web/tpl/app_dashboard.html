@@ -1,0 +1,110 @@
+<div class="hbox hbox-auto-xs hbox-auto-sm">
+  <!-- main -->
+  <div class="col">
+    <!-- main header -->
+    <div class="bg-light lter b-b wrapper-md">
+      <div class="row">
+        <div class="col-sm-6 col-xs-12">
+          <h1 class="m-n font-thin h3 text-black">Administrador de Parlay</h1>
+          <small class="text-muted">Bienvenido a la Aplicación de Administración de Parlay</small>
+        </div>
+      </div>
+    </div>
+    <!-- / main header -->
+    <div class="wrapper-md">
+      <!-- stats -->
+      <div class="row">
+          <div ng-controller="GeneralMonitorStat" ng-init="getGeneralStat()" class="col-md-5">
+          <div class="row row-sm text-center">
+            <div class="col-xs-6">
+              <div class="panel padder-v item">
+                <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate" ng-show="stat.tickets==null"></span>
+                <div class="h1 text-info font-thin h1" ng-hide="stat.tickets==null">{{stat.tickets}}</div>
+                <span class="text-muted text-xs">Tickets</span>
+              </div>
+            </div>
+            <div class="col-xs-6">
+              <a href class="block panel padder-v bg-primary item">
+                <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate text-white" ng-show="stat.playersPlay==null"></span>
+                <span class="text-white font-thin h1 block" ng-hide="stat.playersPlay==null">{{stat.playersPlay}}</span>
+                <span class="text-muted text-xs">Jugadores Activos Hoy</span>
+                
+              </a>
+            </div>
+            <div class="col-xs-6">
+              <a href class="block panel padder-v bg-info item">
+                <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate text-white" ng-show="stat.sale==null"></span>
+                <span class="text-white font-thin h1 block" ng-hide="stat.sale==null">{{formato(stat.sale)}}</span>
+                <span class="text-muted text-xs">Ventas</span>
+                
+              </a>
+            </div>
+            <div class="col-xs-6">
+              <div class="panel padder-v item">
+                <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate" ng-show="stat.winPaid==null"></span>
+                <div class="font-thin h1" ng-hide="stat.winPaid==null">{{formato(stat.winPaid)}}</div>
+                <span class="text-muted text-xs">Premios Pagados Hoy</span>
+              </div>
+            </div>
+            <div class="col-xs-12 m-b-md">
+              <div class="r bg-light dker item hbox no-border">
+                <div class="col w-xs v-middle hidden-md">
+                    <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate" ng-show="stat.ticketsP==null"></span>
+                    <div ng-show="stat.ticketsP!=null" ng-init="inicilizeGraphit()" google-chart chart="chart"></div>
+                </div>
+                <div class="col dk padder-v r-r">
+                  <div class="text-primary-dk font-thin h1"><span>Parlay {{stat.saleParlay}} - Derecho {{stat.saleDerecho}}</span></div>
+                  <span class="text-muted text-xs">{{(stat.saleDerecho <= stat.saleParlay)?"Mayores Venta Por Parlay "+((stat.saleParlay*100)/stat.sale)+" %" :"Mayores Venta Por Derecho "+((stat.saleDerecho*100)/stat.sale)+" %" }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+          <div class="col-md-7"  ng-controller="DashboardStadisticSale">
+          <div class="panel wrapper">
+  
+            <h4 class="font-thin m-t-none m-b text-muted">Monitor de Ventas</h4>
+            <div google-chart chart="chartLine" ng-init="iniciliceGraphiftWeek()" >
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- / stats -->
+      <!-- service -->
+      <div class="panel hbox hbox-auto-xs no-border" ng-controller="DashboardStadisticSale">
+        <div class="col wrapper">
+          <i class="fa fa-circle-o text-info m-r-sm pull-right"></i>
+          <h4 class="font-thin m-t-none m-b-none text-primary-lt">Servicio de Ventas</h4>
+          <span class="m-b block text-sm text-muted">Servicio de Reporte del D&iacute;a (Actualizaci&oacute;n de Ventas de la Ultima Hora)</span>
+          <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate" ng-show="sale.length==0"></span>
+          <div google-chart chart="chart" ng-init="iniciliceGraphift()" ng-show="sale.length>0"  >
+          </div>
+        </div>
+          <div ng-show="produccion" class="col wrapper-lg w-lg bg-light dk r-r">
+          <h4 class="font-thin m-t-none m-b">Reports</h4>
+          <div class="">
+            <div class="text-center-folded">
+              <span class="pull-right text-primary">60%</span>
+              <span class="hidden-folded">Consulting</span>
+            </div>
+            <progressbar value="60" class="progress-xs m-t-sm bg-white" animate="true" type="primary"></progressbar>
+            <div class="text-center-folded">
+              <span class="pull-right text-info">35%</span>
+              <span class="hidden-folded">Online tutorials</span>
+            </div>
+            <progressbar value="35" class="progress-xs m-t-sm bg-white" animate="true" type="info"></progressbar>
+            <div class="text-center-folded">
+              <span class="pull-right text-warning">25%</span>
+              <span class="hidden-folded">EDU management</span>
+            </div>
+            <progressbar value="25" class="progress-xs m-t-sm bg-white" animate="true" type="warning"></progressbar>
+          </div>
+          <p class="text-muted">Dales nisi nec adipiscing elit. Morbi id neque quam. Aliquam sollicitudin venenatis</p>
+        </div>
+      </div>
+      <!-- / service -->
+    </div>
+  </div>
+  <!-- / main -->
+
+</div>

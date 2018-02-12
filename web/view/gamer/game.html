@@ -1,0 +1,70 @@
+<div ng-controller="gameTodayController" ng-init="getGames()" >
+    <div class="bg-light lter b-b wrapper-md">
+          <div class="row">
+            <div class="col-sm-12 col-xs-12">
+              <h1 class="m-n font-thin h3 text-black">Juegos del Dia</h1>
+            </div>
+          </div>
+    </div>
+    <div class="wrapper-md">
+        <div class="panel panel-default" ng-show="isLoadingData">
+            <div class="center-block center_loading">
+                <h3>Buscando la Información de los Juegos del D&iacute;a</h3>
+            <button class="btn btn-lg btn-warning"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Cargando...</button>
+            </div>
+        </div>
+        <div class="panel panel-default" ng-hide="isLoadingData">
+        <div class="panel-heading">
+            Juegos del D&iacute;a
+            <div ng-include="'view/gamer/panelSearchGame.html'"></div>
+        </div>
+        <div class="panel-body table-responsive">
+          <table class="table table-striped m-b-none ticket-gamer">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Fecha</th>
+                <th>Hora</th>
+                <th class="hidden-xs">Descripcion</th>
+                <th class="hidden-xs">Deporte</th>
+                <th class="hidden-xs">Jugadas</th>
+                <th>Resultados</th>
+              </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="game in games" ng-show="showItem($index)">
+                     <td ng-click="openDetails(game)" ng-bind-html="iconPlus"></td>
+                    <td>{{date(game.date)}}</td>
+                    <td>{{time(game.time)}}</td>
+                    <td class="hidden-xs">{{game.descripcion}}</td>
+                    <td class="hidden-xs">{{getSport(game.sport)}}</td>
+                    <td class="hidden-xs">{{game.bets}}</td>
+                    <td>{{game.participants[0].score}} vs {{game.participants[1].score}}</td>
+                </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="panel-footer">
+          <nav >
+            <ul class="pagination pagination-sm">
+                <li ng-click="$event.preventDefault();prevPage()">
+                    <a href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li ng-show="totalPagination-currentPage<=showview"><a href="#">...</a></li>
+                <li ng-repeat="value in getItemTotal()" ng-class="{'active': $index==currentPage}" ng-show="(showview+currentPage>$index&&($index>=currentPage||totalPagination-showview<=$index))||showview>totalPagination" ng-click="$event.preventDefault();changePage($index)">
+                    <a href="#">{{value}}</a>
+                </li>
+                <li ng-click="$event.preventDefault();nextPage()" ng-show="totalPagination>showview" ng-hide="totalPagination-currentPage<=showview"><a href="#">...</a></li>
+                <li ng-click="$event.preventDefault();nextPage()" ng-disable="totalPagination-1==currentPage">
+                    <a href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+          </nav>
+      </div>
+      </div>
+    </div>
+</div>

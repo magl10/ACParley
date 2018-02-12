@@ -1,0 +1,32 @@
+<div class="container w-xxl w-auto-xs" ng-controller="SigninFormController">
+  <a href class="navbar-brand block m-t">{{app.name}}</a>
+  <div class="m-b-lg">
+    <div class="wrapper text-center">
+      <strong>Ingrese Al Sitio Presionando</strong>
+    </div>
+    <form name="form" class="form-validation">
+      <div class="text-danger wrapper text-center" ng-show="authError">
+          {{authError}}
+      </div>
+      <div class="list-group list-group-sm">
+        <div class="list-group-item">
+           <input type="text" placeholder="Username" class="form-control no-border" ng-model="user.email" required>
+        </div>
+        <div class="list-group-item">
+           <input type="password" placeholder="Password" class="form-control no-border" ng-model="user.password" required>
+        </div>
+      </div>
+          <div class="panel panel-default" ng-show="loading">
+            <div class="center-block center_loading">
+            <h3>Verificando Usuario</h3>
+            <div class="well"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Cargando...</div>
+            </div>
+        </div>
+        <div ng-hide="loading">
+      <button type="submit" class="btn btn-lg btn-primary btn-block" ng-click="login()" ng-disabled='form.$invalid'>Entrar</button>
+      <div class="text-center m-t m-b"><a >Olvide Mi Contrase&ntilde;a?</a></div> 
+      </div>
+    </form>
+  </div>
+  <div class="text-center" ng-include="'tpl/blocks/page_footer.html'"></div>
+</div>

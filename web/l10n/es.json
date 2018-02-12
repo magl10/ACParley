@@ -1,0 +1,46 @@
+{
+
+"header" : {
+  "navbar" : {
+    "UPLOAD" : "Subir",
+    "new" : {
+      "NEW" : "Nuevo",
+      "ADMIN" : "Administrador",
+      "AGENT" : "Agente",
+      "AGENCIA" : "Agencia o Jugador"
+    },
+    "NOTIFICATIONS" : "Benachrichtigungen"
+  }
+},
+"aside" : {
+  "nav" : {
+     "home":{
+       "HEADER": "Inicio" ,
+       "DASHBOARD": "Dashboard"
+       
+     },
+     "player":{
+        "HEADER": "Jugadores",
+        "SHOW": "Mostrar",
+        "SALE": "Ventas",
+        "PLAY":"Jugadas",
+        "BALANCE":"Balance Detallado",
+        "BALANCEAGENT":"Balance Detallado Agente-Taq"
+     },
+     "agent":{
+        "HEADER": "Agente",
+        "SHOW": "Mostrar",
+        "BALANCE": "Banca Agente",
+        "BALANCEAGENT":"Agente Taquilla"
+     },
+     "report":{
+         "HEADER": "Reportes",
+         "PLAYER": "Estado de Jugadas",
+         "AGENT": "Agente"
+     }
+  },
+  "MILESTONE" : "Meilenstein",
+  "RELEASE" : "Freisetzung"
+}
+
+}

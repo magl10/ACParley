@@ -1,0 +1,34 @@
+<div id="{{idModal}}">
+<div class="modal-header">
+     <h3 class="modal-title">Ticket {{ticket.idticket}}</h3>
+ </div>
+ <div class="modal-body">
+     <div>
+         <header>
+             <div>Agencia: {{ticket.agencia}}</div>
+             <div>Ticket: {{ticket.idticket}}</div>
+             <div>Fecha: {{ticket.dateCreation}}</div>
+             <div>Tipo: {{ticket.typebet}}</div>
+             <div>Status de Pago: {{ticket.isPaid?"Pagado":"Sin Pagar"}}</div>
+             <div>Descripcion: {{ticket.descripcion}}</div>
+         </header>
+         <hr/>
+         <section>
+             Jugadas
+             <ul class="list-unstyled">
+                 <li ng-repeat="detail in details">{{detail.descripcion}}</li>
+             </ul>
+         </section>
+         <hr/>
+         <footer>
+             <div>Jugado: {{ticket.riskamount}}</div>
+             <div>A Ganar: {{ticket.winamount}}</div>
+             <div>A Cobrar:  {{ticket.riskamount+ticket.winamount}}</div>
+         </footer>
+     </div>
+ </div>
+ <div class="modal-footer">
+     <button class="btn btn-primary" ng-click="ok()">OK</button>
+     <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+ </div>
+</div>

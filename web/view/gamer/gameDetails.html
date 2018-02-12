@@ -1,0 +1,50 @@
+
+<div class="modal-header">
+     <button class="btn btn-primary pull-right" ng-click="ok()">X</button>
+     <h3 class="modal-title">Detalles de Jugadas </h3>
+     
+     <h4 class="modal-title">Juego: {{game.descripcion}}</h4>
+     <h4 class="modal-title">Status: {{game.status}}</h4>
+ </div>
+ <div class="modal-body">
+<div class="panel panel-default" ng-show="isLoadingData">
+            <div class="center-block center_loading">
+            <h3>Buscando la Información de los Tickets Realizados</h3>
+            <button class="btn btn-lg btn-warning"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Cargando...</button>
+            </div>
+        </div>
+        <div class="panel panel-default" ng-hide="isLoadingData">
+        <div class="table-responsive">
+          <table class="table table-striped m-b-none ticket-gamer">
+            <thead>
+              <tr>
+                <th>Ticket</th>
+                <th>Fecha y Hora</th>
+                <th class="hidden-xs">Jugador</th>
+                <th class="hidden-xs">Descripcion</th>
+                <th>Jugada</th>
+                <th class="hidden-xs">Tipo</th>
+                <th class="hidden-xs">Monto</th>
+               
+                <th>A Ganar</th>
+              </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="ticket in tickets">
+                    <td>{{ticket.idticket}}</td>
+                    <td>{{ticket.dateCreation}}</td>
+                    <td class="hidden-xs">{{ticket.agencia}}</td>
+                    <td>{{ticket.descripcion}}</td>
+                    <td>{{ticket.descGame}}</td>
+                    <td class="hidden-xs">{{ticket.typebet}}</td>
+                    <td class="hidden-xs">{{ticket.riskamount}}</td>
+                    <td>{{ticket.winamount}}</td>
+                </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+</div>
+ <div class="modal-footer">
+     <button class="btn btn-primary" ng-click="ok()">Cerrar</button>
+ </div>
